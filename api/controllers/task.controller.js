@@ -4,7 +4,6 @@ const searchHelper = require('../../helpers/search');
 
 // [GET] /api/tasks
 exports.index = async (req, res) => {
-
     //Find lọc dữ liệu
     const find = {
         deleted: false
@@ -58,3 +57,26 @@ exports.detail = async (req, res) => {
     });
     res.json(task);
 };
+
+// [PATCH] /api/tasks/change-status/:id
+exports.changeStatus = async (req, res) => {
+    try {
+        const id = req.params.id;
+        const status = req.body.status;
+
+        const task = await Task.updateOne(
+            { _id: id },
+            { status: status }
+        );
+        res.json({
+            code: 200,
+            message: "Cập nhật trạng thái thành công"
+        });
+    } catch (error) {
+        res.json({
+            code: 400,
+            message: "Cập nhật trạng thái thất bại"
+        });
+    }
+}
+
