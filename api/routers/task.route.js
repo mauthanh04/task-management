@@ -9,4 +9,6 @@ routes.get("/detail/:id", controller.detail);
 
 routes.patch("/change-status/:id", controller.changeStatus);
 
+routes.patch("/change-multi", controller.changeMulti);
+
 module.exports = routes;

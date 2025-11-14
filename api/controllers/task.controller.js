@@ -78,5 +78,25 @@ exports.changeStatus = async (req, res) => {
             message: "Cập nhật trạng thái thất bại"
         });
     }
-}
+};
 
+// [PATCH] /api/tasks/change-multi
+exports.changeMulti = async (req, res) => {
+    try {
+        const { ids, key, value } = req.body;
+
+        const task = await Task.updateMany(
+            { _id: { $in: ids } },
+            { [key]: value }
+        );
+        res.json({
+            code: 200,
+            message: "Cập nhật nhiều trạng thái thành công"
+        });
+    } catch (error) {
+        res.json({
+            code: 400,
+            message: "Cập nhật nhiều trạng thái thất bại"
+        });
+    }
+};
