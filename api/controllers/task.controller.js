@@ -118,3 +118,24 @@ exports.create = async (req, res) => {
         });
     }
 };
+
+// [PUT] /api/tasks/update/:id
+exports.update = async (req, res) => {
+    try {
+        const id = req.params.id;
+        const data = await Task.updateOne(
+            { _id: id },
+            req.body
+        );
+        res.json({
+            code: 200,
+            message: "Cập nhật công việc thành công",
+            data: data
+        });
+    } catch (error) {
+        res.json({
+            code: 400,
+            message: "Cập nhật công việc thất bại"
+        });
+    }
+};

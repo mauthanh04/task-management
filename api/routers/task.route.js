@@ -13,4 +13,6 @@ routes.patch("/change-multi", controller.changeMulti);
 
 routes.post("/create", controller.create);
 
+routes.put("/update/:id", controller.update);
+
 module.exports = routes;
