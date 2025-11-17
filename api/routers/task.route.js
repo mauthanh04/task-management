@@ -11,4 +11,6 @@ routes.patch("/change-status/:id", controller.changeStatus);
 
 routes.patch("/change-multi", controller.changeMulti);
 
+routes.post("/create", controller.create);
+
 module.exports = routes;
