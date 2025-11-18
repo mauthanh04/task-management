@@ -6,6 +6,7 @@ const taskSchema = new mongoose.Schema({
     content: String,
     timeStart: Date,
     timeFinish: Date,
+    deletedAt: Date,
     deleted: {
         type: Boolean,
         default: false

@@ -130,12 +130,57 @@ exports.update = async (req, res) => {
         res.json({
             code: 200,
             message: "Cập nhật công việc thành công",
-            data: data
         });
     } catch (error) {
         res.json({
             code: 400,
             message: "Cập nhật công việc thất bại"
+        });
+    }
+};
+
+// [DELETE] /api/tasks/delete/:id
+exports.delete = async (req, res) => {
+    try {
+        const id = req.params.id;
+        const data = await Task.updateOne(
+            { _id: id },
+            { 
+                deleted: true,
+                deletedAt: new Date()
+            }
+        );
+        res.json({
+            code: 200,
+            message: "Xóa công việc thành công",
+        });
+    } catch (error) {
+        res.json({
+            code: 400,
+            message: "Xóa công việc thất bại"
+        });
+    }
+};
+
+// [DELETE] /api/tasks/delete-multi
+exports.deleteMulti = async (req, res) => {
+    try {
+        const ids = req.body.ids;   
+        const data = await Task.updateMany(
+            { _id: { $in: ids } },
+            {
+                deleted: true,
+                deletedAt: new Date()
+             }  
+        );
+        res.json({
+            code: 200,
+            message: "Xóa nhiều công việc thành công",
+        });
+    } catch (error) {
+        res.json({
+            code: 400, 
+            message: "Xóa nhiều công việc thất bại"
         });
     }
 };
