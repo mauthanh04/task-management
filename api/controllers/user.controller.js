@@ -1,4 +1,5 @@
 const User = require('../models/user.model');
+const generateHelper = require('../helpers/generate.helper');
 const md5 = require('md5');
 
 // [POST] /api/users/register
@@ -65,3 +66,30 @@ exports.login = async (req, res) => {
         token: token
     });
 };
+
+// [POST] /api/users/password/forgot
+exports.forgotPassword = async (req, res) => {
+    const email = req.body.email;
+    const user = await User.findOne({
+        email: email,
+        deleted: false
+    });
+
+    if (!user) {
+        return res.json({
+            code: 400,
+            message: "Email không tồn tại"
+        });
+    }
+
+    const otp = generateHelper.generateRandomNumber(8);
+
+    const timeExpire = 5;
+
+    const objectForgotPassword = {
+        email: email,
+        otp: otp,
+        timeExpire: Date.now() + timeExpire * 60 * 1000 // 5 phút
+    };
+
+};    
