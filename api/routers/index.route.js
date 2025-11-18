@@ -1,5 +1,9 @@
 const taskRouter = require('./task.route');
+const userRouter = require('./user.route');
 
 module.exports = (app) => {
-    app.use('/api/tasks', taskRouter);
+    const version = "/api";
+
+    app.use(version + "/tasks", taskRouter);
+    app.use(version + "/users", userRouter);
 };
