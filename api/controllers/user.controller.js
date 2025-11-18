@@ -1,5 +1,5 @@
 const User = require('../models/user.model');
-const generateHelper = require('../helpers/generate.helper');
+const generateHelper = require('../../helpers/generate');
 const md5 = require('md5');
 
 // [POST] /api/users/register
