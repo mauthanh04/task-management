@@ -22,7 +22,8 @@ exports.register = async (req, res) => {
         const user = new User({
             fullName: req.body.fullName,
             email: req.body.email,
-            password: req.body.password
+            password: req.body.password,
+            token: generateHelper.generateRandomString(30)
         });
         await user.save();
 
@@ -92,7 +93,7 @@ exports.forgotPassword = async (req, res) => {
     const objectForgotPassword = {
         email: email,
         otp: otp,
-        expireAt: Date.now() + timeExpire * 60
+        expireAt: Date.now() + timeExpire * 60 * 1000 // 5 phút
     };
 
     const forgotPassword = new ForgotPassword(objectForgotPassword);
