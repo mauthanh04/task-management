@@ -15,13 +15,13 @@ const port = process.env.PORT;
 // parse application/json
 app.use(bodyParser.json());
 
-routes(app);
-
 // Enable CORS
 app.use(cors());
 
 // Enable cookie parser
 app.use(cookieParser());
+
+routes(app);
 
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
