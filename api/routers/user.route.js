@@ -13,4 +13,6 @@ routes.post("/password/otp", controller.otpPassword);
 
 routes.post("/password/reset", controller.resetPassword);
 
+routes.get("/detail", controller.detail);
+
 module.exports = routes;
