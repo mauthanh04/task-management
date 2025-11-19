@@ -1,6 +1,6 @@
 const User = require('../models/user.model');
 const generateHelper = require('../../helpers/generate');
-const forgotPasswordHelper = require('../models/forgot-password.model');
+const ForgotPassword = require('../models/forgot-password.model');
 const sendMailHelper = require('../../helpers/sendMail');
 const md5 = require('md5');
 
@@ -95,7 +95,7 @@ exports.forgotPassword = async (req, res) => {
         expireAt: Date.now() + timeExpire * 60
     };
 
-    const forgotPassword = new forgotPasswordHelper(objectForgotPassword);
+    const forgotPassword = new ForgotPassword(objectForgotPassword);
     await forgotPassword.save();
 
     // gửi OTP qua email user
@@ -111,3 +111,34 @@ exports.forgotPassword = async (req, res) => {
     });
 
 };    
+
+// [POST] /api/users/password/otp
+exports.otpPassword = async (req, res) => {
+    const email = req.body.email;
+    const otp = req.body.otp;
+
+    const result = await ForgotPassword.findOne({
+        email: email,
+        otp: otp
+    });
+
+    if (!result) {
+        return res.json({
+            code: 400,
+            message: "OTP không chính xác"
+        });
+    }
+
+    const user = await User.findOne({
+        email: email
+    });
+
+    const token = user.token;
+    res.cookie("token", token);
+
+    res.json({
+        code: 200,
+        message: "Xác thực OTP thành công",
+        token: token
+    });
+};
