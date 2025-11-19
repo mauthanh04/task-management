@@ -174,31 +174,9 @@ exports.resetPassword = async (req, res) => {
 
 // [GET] /api/users/detail
 exports.detail = async (req, res) => {
-    const token = req.cookies.token;
-
-    try {
-        const user = await User.findOne({
-            token: token,
-            deleted: false
-        }).select("-password -token");
-
-        if (!user) {
-            return res.json({
-                code: 400,
-                message: "Người dùng không tồn tại"
-            });
-        }
-
         res.json({
             code: 200,
             message: "Lấy thông tin người dùng thành công",
-            data: user
+            data: req.user
         });
-        
-    } catch (error) {
-        res.json({
-            code: 500,
-            message: "Lỗi server"
-        });
-    }
 };
