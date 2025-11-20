@@ -17,4 +17,6 @@ routes.post("/password/reset", controller.resetPassword);
 
 routes.get("/detail", authMiddleware.requireAuth, controller.detail);
 
+routes.get("/list", authMiddleware.requireAuth, controller.list);
+
 module.exports = routes;

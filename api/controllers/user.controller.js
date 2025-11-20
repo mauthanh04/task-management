@@ -180,3 +180,13 @@ exports.detail = async (req, res) => {
             data: req.user
         });
 };
+
+// [GET] /api/users/list
+exports.list = async (req, res) => {
+    const users = await User.find({ deleted: false }).select("fullName email");
+    res.json({
+        code: 200,
+        message: "Lấy danh sách người dùng thành công",
+        users: users
+    });
+};
