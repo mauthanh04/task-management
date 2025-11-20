@@ -6,6 +6,10 @@ const searchHelper = require('../../helpers/search');
 exports.index = async (req, res) => {
     //Find lọc dữ liệu
     const find = {
+        $or: [
+            { createBy: req.user.id },
+            { listUser: req.user.id }
+        ],
         deleted: false
     }
 
